@@ -1,0 +1,854 @@
+@import './vars.scss';
+@import './mixins.scss';
+
+
+%noselect {
+  @include noselect;
+}
+
+%clearfix {
+  @include clearfix;
+}
+
+$root_group: ".query-builder > .group-container > .group";
+
+
+.query-builder {
+  @extend %noselect;
+  overflow: hidden;
+  font-family: $main-font-family;
+  font-size: $main-font-size;
+  color: $main-text-color;
+  line-height: 1.25;
+  margin: $main-margin;
+  background: $main-background;
+  border-radius: $item-radius;
+
+  .group-or-rule {
+    border-radius: $item-radius;
+    position: relative;
+  }
+
+  .group-or-rule-container {
+    margin-top: $item-offset;
+    margin-bottom: $item-offset;
+    padding-right: $item-offset;
+    &:first-child {
+      margin-top: 0px;
+    }
+    &:last-child {
+      margin-bottom: 0px;
+    }
+  }
+
+  // root container
+  & > .group-or-rule-container {
+    padding-right: 0px;
+  }
+
+  .locked {
+    border-color: $locked-border-color !important;
+    border-style: dashed !important;
+  }
+
+
+  /******************************************************************************/
+  /** RULE **********************************************************************/
+  /******************************************************************************/
+
+  .rule {
+    flex: 1;
+    display: flex;
+    background-color: $rule-background;
+    border: $rule-border-width solid $rule-border-color;
+    padding: $rule-padding;
+    
+    &:hover {
+      box-shadow: $rule-shadow-hover;
+      border-left-width: $rule-border-left-width-hover;
+      @include fix_padding_for_hovered($rule-padding, $rule-border-width, $rule-border-left-width-hover);
+    }
+  }
+
+  //"remove" button
+  .rule--header {
+    @extend %clearfix;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+  }
+
+  .qb-drag-handler.rule--drag-handler {
+    display: flex;
+    align-items: center;
+    margin-right: $drag-offset-right;
+  }
+
+
+  .rule--body {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+
+  .rule--body--wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rule--error {
+    color: $rule-error-color;
+    margin-top: 5px;
+  }
+
+  .rule-with-error > .rule {
+    border-color: $rule-with-error-border-color;
+  }
+
+
+  /******************************************************************************/
+  /** GROUP *********************************************************************/
+  /******************************************************************************/
+
+  .simple_group {
+    background: $group-background;
+    border: $group-border-width solid $group-border-color;
+    
+    @for $lev from $minLevel through $maxLevel {
+      &.level-#{$lev} {
+        background: var(--group-background-#{$lev}, $group-background);
+      }
+    }
+
+    &:hover {
+      box-shadow: $group-shadow-hover;
+      border-left-width: $group-border-left-width-hover;
+      @include fix_paddings_for_hovered_group($item-offset-left, $treeline-thick, $group-border-width, $group-border-left-width-hover);
+    }
+  }
+
+  // unset hover styles for root group
+  & > .group-container > .simple_group {
+    &:hover {
+      box-shadow: none;
+      border-left-width: $group-border-width;
+      @include fix_paddings_for_hovered_group($item-offset-left, $treeline-thick, $group-border-width, $group-border-width);
+    }
+  }
+
+  .group--header,
+  .group--footer {
+    display: flex;
+    align-items: stretch;
+
+    padding: {
+      left: calc($item-offset-left / 2 - $treeline-thick);
+      right: $item-offset;
+    }
+    margin: {
+      top: $item-offset;
+      bottom: $item-offset;
+    }
+  }
+
+  .qb-drag-handler.group--drag-handler {
+    margin-right: $drag-offset-right;
+    margin-top: 3px;
+    position: relative;
+    align-self: center;
+  }
+  .group--conjunctions {
+    .qb-drag-handler.group--drag-handler {
+      margin-left: $group-drag-offset-left;
+    }
+  }
+
+  .group--conjunctions {
+    flex-shrink: 0;
+    display: flex;
+    &.hide--conj {
+      opacity: 0.3;
+    }
+  }
+  .group--conjunctions {
+    border-radius: $conjunctions-radius;
+    overflow: hidden;
+  }
+  .group--header:hover .group--conjunctions {
+    overflow: visible;
+  }
+
+  .group--children {
+    padding-left: $item-offset-left;
+    margin-top: $item-offset;
+    margin-bottom: $item-offset;
+  }
+
+  .group-with-error > .group {
+    border-color: $group-with-error-border-color;
+  }
+
+  .group--actions {
+    align-self: center;
+    margin-left: $group-actions-offset-left;
+    flex: 1;
+    display: flex;
+
+    &--tl,
+    &--bl{
+      justify-content: flex-start;
+    }
+
+    &--tl{
+      margin-left: calc($group-actions-offset-left * 2);
+    }
+
+    &--tc,
+    &--bc {
+      justify-content: center;
+    }
+
+    &--tr,
+    &--br{
+      justify-content: flex-end;
+    }
+
+    // .action--DELETE {
+    //   margin-top: -1px;
+    // }
+  }
+
+
+  /******************************************************************************/
+  /** RULE_GROUP *********************************************************************/
+  /******************************************************************************/
+
+  .rule_group {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: $rule-padding;
+    background: $rulegroup-background;
+    border: $rulegroup-border-width solid $rulegroup-border-color;
+
+    @for $lev from $minLevel through $maxLevel {
+      &.level-#{$lev} {
+        background: var(--rulegroup-background-#{$lev}, $rulegroup-background);
+      }
+    }
+
+    &:hover {
+      box-shadow: $rulegroup-shadow-hover;
+      border-left-width: $rulegroup-border-left-width-hover;
+      @include fix_padding_for_hovered($rule-padding, $rulegroup-border-width, $rulegroup-border-left-width-hover);
+    }
+
+    > .group--field {
+      margin-top: $item-offset;
+      margin-bottom: $item-offset;
+      align-self: center;
+    }
+    > .group--actions {
+      margin-left: $rule-group-actions-offset-left;
+      align-self: center;
+      flex: 0;
+    }
+
+    > .rule_group--children {
+      flex: 1;
+
+      margin-top: $rulegroup-offset;
+      margin-bottom: $rulegroup-offset;
+      padding-left: $rulegroup-offset-left;
+
+      > .group-or-rule-container {
+        margin-bottom: $rulegroup-offset;
+        margin-top: $rulegroup-offset;
+        padding-right: $rulegroup-offset;
+      }
+
+      &.one--child {
+        padding-left: calc($rulegroup-offset-left / 2);
+      }
+    }
+  }
+
+  .rule_group--error {
+    color: $rule-error-color;
+    margin-left: 5px;
+    margin-top: 5px;
+    width: 100%;
+  }
+
+  // complex nesting
+  // inside rule_group
+  .rule_group .rule {
+    //background: $rule-in-rulegroup-background;
+    border-color: $rule-in-rulegroup-border-color;
+  }
+  .rule_group .rule_group {
+    //background: $rulegroup-in-rulegroup-background;
+    border-color: $rulegroup-in-rulegroup-border-color;
+  }
+  .rule_group .rule_group_ext {
+    //background: $rulegroupext-in-rulegroup-background;
+    border-color: $rulegroupext-in-rulegroup-border-color;
+  }
+
+  /******************************************************************************/
+  /** RULE_GROUP_EXT *********************************************************************/
+  /******************************************************************************/
+
+  .rule_group_ext {
+    background: $rulegroupext-background;
+    border: $rulegroupext-border-width solid $rulegroupext-border-color;
+
+    @for $lev from $minLevel through $maxLevel {
+      &.level-#{$lev} {
+        background: var(--rulegroupext-background-#{$lev}, $rulegroupext-background);
+      }
+    }
+
+    &:hover {
+      box-shadow: $rulegroupext-shadow-hover;
+      border-left-width: $rulegroupext-border-left-width-hover;
+      @include fix_paddings_for_hovered_group($item-offset-left, $treeline-thick, $rulegroupext-border-width, $rulegroupext-border-left-width-hover);
+    }
+
+    .group--field--count--rule {
+      display: flex;
+      flex-wrap: wrap;
+      flex: 1;
+  
+      padding: {
+        left: calc($item-offset-left / 2 - $treeline-thick);
+        right: $item-offset;
+      }
+      margin: {
+        top: $item-offset;
+        bottom: $item-offset;
+      }
+    }
+
+    // & > .group--header .group--actions {
+    // }
+  }
+
+
+  // complex nesting
+  // inside rule_group_ext
+  .rule_group_ext .rule {
+    //background: $rule-in-rulegroupext-background;
+    border-color: $rule-in-rulegroupext-border-color;
+  }
+  .rule_group_ext .simple_group {
+    //background: $group-in-rulegroupext-background;
+    border-color: $group-in-rulegroupext-border-color;
+  }
+  .rule_group_ext .rule_group_ext {
+    //background: $rulegroupext-in-rulegroupext-background;
+    border-color: $rulegroupext-in-rulegroupext-border-color;
+  }
+  .rule_group_ext .rule_group {
+    //background: $rulegroup-in-rulegroupext-background;
+    border-color: $rulegroup-in-rulegroupext-border-color;
+  }
+
+
+  
+  /******************************************************************************/
+  /** CASE_GROUP ****************************************************************/
+  /******************************************************************************/
+
+  .switch_group {
+    background: $switch-background;
+    border: $switch-border-width solid $switch-border-color;
+
+    @for $lev from $minLevel through $maxLevel {
+      &.level-#{$lev} {
+        background: var(--switch-background-#{$lev}, $switch-background);
+      }
+    }
+  }
+
+  .case_group {
+    background: $case-background;
+    border: $case-border-width solid $case-border-color;
+
+    @for $lev from $minLevel through $maxLevel {
+      &.level-#{$lev} {
+        background: var(--case-background-#{$lev}, $case-background);
+      }
+    }
+
+    .case_group--body {
+      display: flex;
+      flex-direction: row;
+      margin-top: $item-offset;
+      margin-bottom: $item-offset;
+    
+      .case_group--children {
+        flex: auto;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+      }
+    }
+
+    .case_group--value {
+      margin-top: 0;
+      margin-bottom: 0;
+      margin-left: $item-offset;
+      margin-right: $item-offset;
+    }
+  }
+
+  /******************************************************************************/
+  /** DRAG **********************************************************************/
+  /******************************************************************************/
+
+
+  &.qb-dragging {
+    cursor: -webkit-grabbing !important;
+    cursor: grabbing !important;
+    button {
+      pointer-events: none;
+    }
+  }
+
+  .qb-draggable {
+    @extend %noselect;
+    pointer-events: none;
+    position: absolute;
+    opacity: 0.7;
+    z-index: 1000;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  .qb-drag-handler {
+    @extend %noselect;
+    cursor: -webkit-grabbing;
+    cursor: grabbing;
+  }
+
+  .qb-placeholder {
+    border-color: $placeholder-border-color !important;
+    border-style: dashed !important;
+  }
+
+  .qb-draggable {
+    &::before, &::after {
+      display: none;
+    }
+  }
+
+
+  // line between conjs and children
+  .group--header:not(.no--children):not(.hide--conjs) {
+    position: relative;
+
+    &::before {
+      z-index: 0;
+      content: '';
+      position: absolute;
+      border-color: $treeline-color;
+      border-style: solid;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+
+    &.hide--line {
+      &::before {
+        border-color: $treeline-disabled-color !important;
+      }
+    }
+  }
+
+  // lines between items
+  .group--children {
+    & > .group-or-rule-container > .group-or-rule {
+      &::before, &::after {
+        content: '';
+        position: absolute;
+        border-color: $treeline-color;
+        border-style: solid;    
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+    }
+    & > .group-or-rule-container:last-child > .group-or-rule {
+      &::after {
+        display: none;
+      }
+    }
+
+    // don't connect line to conjs
+    &.hide--conjs {
+      @include hide_conjs_for_group(
+        $item-offset, $treeline-thick, $treeline-radius,
+        $rule-border-width, $group-border-width, $rulegroup-border-width, $rulegroupext-border-width
+      );
+    }
+
+    // gray line
+    &.hide--line {
+      & > .group-or-rule-container > .group-or-rule {
+        &::before, &::after {
+          border-color: $treeline-disabled-color !important;
+        }
+      }
+    }
+  }
+
+  // inside group
+  .group--children {
+    @include line_positions_for_group(
+      $item-offset-left, $item-offset,
+      $treeline-thick, $treeline-radius, $treeline-color,
+      $rule-border-width, $group-border-width, $rulegroup-border-width, $rulegroupext-border-width,
+      $rule-border-left-width-hover, $group-border-left-width-hover, $rulegroup-border-left-width-hover, $rulegroupext-border-left-width-hover
+    );
+  }
+
+  // inside rule_group
+  .rule_group--children {
+    @include line_positions_for_group(
+      $rulegroup-offset-left, $rulegroup-offset,
+      $treeline-rulegroup-thick, $treeline-radius, $treeline-rulegroup-color,
+      $rule-border-width, $group-border-width, $rulegroup-border-width, $rulegroupext-border-width,
+      $rule-border-left-width-hover, $group-border-left-width-hover, $rulegroup-border-left-width-hover, $rulegroupext-border-left-width-hover
+    );
+    &, &.hide--conjs {
+      @include hide_conjs_for_group(
+        $rulegroup-offset, $treeline-rulegroup-thick, $treeline-radius,
+        $rule-border-width, $group-border-width, $rulegroup-border-width, $rulegroupext-border-width
+      );
+    }
+  }
+
+  // inside rule_group_ext
+  .rule_group_ext--children,
+  .rule_group_ext--children .group--children:not(.rule_group--children) {
+    @include line_positions_for_group(
+      $item-offset-left, $item-offset,
+      $treeline-rulegroupext-thick, $treeline-radius, $treeline-rulegroupext-color,
+      $rule-border-width, $group-border-width, $rulegroup-border-width, $rulegroupext-border-width,
+      $rule-border-left-width-hover, $group-border-left-width-hover, $rulegroup-border-left-width-hover, $rulegroupext-border-left-width-hover
+    );
+    &.hide--conjs {
+      @include hide_conjs_for_group(
+        $item-offset, $treeline-rulegroupext-thick, $treeline-radius,
+        $rule-border-width, $group-border-width, $rulegroup-border-width, $rulegroupext-border-width
+      );
+    }
+  }
+
+  // switch
+  .switch_group--children {
+    @include line_positions_for_group(
+      $item-offset-left, $item-offset,
+      $treeline-switch-thick, $treeline-radius, $treeline-switch-color,
+      $rule-border-width, $case-border-width, $rulegroup-border-width, $rulegroupext-border-width,
+      $rule-border-left-width-hover, $case-border-width, $rulegroup-border-left-width-hover, $rulegroupext-border-left-width-hover
+    );
+  }
+
+  // header
+  .group--header:not(.no--children):not(.hide--conjs) {
+    @include line_position_for_header($treeline-offset-from-conjs, $item-offset-left, $treeline-thick, $treeline-color);
+  }
+  .simple_group:hover:not(#{$root_group}) {
+    & > .group--header:not(.no--children):not(.hide--conjs) {
+      @include fix_line_position_for_hovered_header($item-offset-left, $treeline-thick, $group-border-width, $group-border-left-width-hover);
+    }
+  }
+  .rule_group_ext,
+  .rule_group_ext .simple_group {
+    & > .group--header:not(.no--children):not(.hide--conjs) {
+      @include line_position_for_header($treeline-offset-from-conjs, $item-offset-left, $treeline-rulegroupext-thick, $treeline-rulegroupext-color);
+    }
+  }
+  .rule_group_ext:hover {
+    & > .group--header:not(.no--children):not(.hide--conjs) {
+      @include fix_line_position_for_hovered_header($item-offset-left, $treeline-rulegroupext-thick, $rulegroupext-border-width, $rulegroupext-border-left-width-hover);
+    }
+  }
+  .switch_group {
+    & > .group--header:not(.no--children):not(.hide--conjs) {
+      @include line_position_for_header($treeline-offset-from-switch, $item-offset-left, $treeline-switch-thick, $treeline-switch-color);
+    }
+  }
+
+
+  /******************************************************************************/
+  /** RULE ITEMS ****************************************************************/
+  /******************************************************************************/
+
+  $rule_items: ".rule--field", ".rule--fieldsrc", ".group--field", ".rule--operator", ".rule--value", ".rule--operator-options", ".rule--widget", 
+  ".widget--widget", ".widget--valuesrc", ".widget--sep", ".operator--options--sep",
+  ".rule--before-widget", ".rule--after-widget";
+  
+  $seps: ".widget--sep", ".operator--options--sep", ".rule--func--bracket-before", ".rule--func--bracket-after", ".rule--func--arg-sep";
+
+  #{$rule_items} {
+    display: inline-block;
+  }
+
+  // seps
+  #{$seps} {
+    vertical-align: bottom;
+    align-self: flex-end;
+    margin-bottom: $seps-offset-bottom;
+  }
+  .rule--func--arg-sep {
+    margin-bottom: calc($seps-offset-bottom - 5px);
+  }
+  .widget--sep {
+    margin-left: $rule-parts-distance;
+    margin-right: $rule-parts-distance;
+  }
+  .widget--sep.widget--sep-first {
+    margin-right: $rule-parts-distance;
+    margin-left: 0;
+  }
+  .rule--operator {
+    // more distinction between LHS and RHS
+    margin-left: calc($rule-parts-distance * 2);
+    margin-right: calc($rule-parts-distance * 2);
+  }
+  .operator--options--sep {
+    margin-right: $rule-parts-distance;
+  }
+  .rule--func--arg-sep {
+    margin-left: 3px;
+    margin-right: 6px;
+  }
+  .rule--func--bracket-after {
+    margin-left: calc($rule-parts-distance / 2);
+    margin-right: 2px; // small
+  }
+  .rule--func--bracket-before {
+    margin-left: calc($rule-parts-distance / 2);
+    margin-right: calc($rule-parts-distance / 2);
+  }
+
+
+  // .rule--func--arg-label-sep {
+  //   margin-left: 1px;
+  //   margin-right: 6px;
+  // }
+
+  // valuesrc
+  .widget--valuesrc {
+    //margin-left: calc(-1 * $rule-parts-distance + 2px); // be closer to widget
+    //margin-right: calc(-1 * $rule-parts-distance + 2px); // be closer to widget
+    vertical-align: top;
+  }
+  .rule--fieldsrc {
+    // margin-right: calc(-1 * $rule-parts-distance + 2px); // be closer to widget
+    vertical-align: top;
+  }
+
+  .operator--options {
+    display: flex;
+  }
+
+
+  .rule--operator-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .rule--operator-text-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  div.tooltip-inner {
+    max-width: 500px;
+  }
+
+  .rule--label {
+    display: block;
+    font-weight: bold;
+  }
+
+
+  /******************************************************************************/
+  /** FUNC **********************************************************************/
+  /******************************************************************************/
+
+
+  $rule_func_items: ".rule--func--wrapper", ".rule--func", ".rule--func--args", ".rule--func--arg", ".rule--func--arg-value", 
+    ".rule--func--bracket-before", ".rule--func--bracket-after", ".rule--func--arg-sep",
+    ".rule--func--arg-label", ".rule--func--arg-label-sep";
+
+  #{$rule_func_items} {
+    display: inline-block;
+  }
+
+  .rule--func--wrapper {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .rule--func--args {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .rule--func--arg {
+    display: flex;
+  }
+
+
+  // containers
+  .rule--field-wrapper,
+  .rule--field--func, 
+  .rule--func--wrapper, 
+  .rule--func--args, 
+  .rule--func--arg, 
+  .rule--func--arg-value, 
+  .rule--func--arg-value > .rule--widget,
+  .widget--func {
+    display: contents;
+  }
+
+  // multiline distance
+  .rule--func, .widget--widget {
+    margin-bottom: $multiline-distance;
+  }
+  .rule--body--wrapper {
+    margin-bottom: calc(-1 * $multiline-distance);
+  }
+  .rule_group_ext > .group--header .group--conjunctions {
+    // fix bottom radius issue for antd
+    margin-bottom: $multiline-distance;
+  }
+
+
+  /******************************************************************************/
+  /** Shrink textarea ***********************************************************/
+  /******************************************************************************/
+
+
+  .rule--body.can--shrink--value {
+    //align-items: center;
+    .rule--value {
+      flex: 1;
+      & > .rule--widget {
+        width: 100%;
+        display: flex;
+        & .widget--widget {
+          flex: 1;
+        }
+      }
+    }
+  }
+}
+
+
+/******************************************************************************/
+/** Minimalism ****************************************************************/
+/******************************************************************************/
+
+
+@mixin visible_only_for_hovered_group($what) {
+  @if $what {
+    #{$what} {
+      transition: opacity 0.2s;
+    }
+    .group--header:hover .group--header,
+    .group--header:not(:hover),
+    .rule_group:not(:hover),
+    .group--field--count--rule:not(:hover) {
+      #{$what} {
+        opacity: 0;
+      }
+    }
+  }
+}
+
+@mixin display_conjs_only_for_hovered_group($inactive, $active) {
+  @if $inactive {
+    #{$inactive} {
+      transition-duration: 0.2s;
+      transition-property: width, min-width, padding-left, padding-right, margin, overflow, opacity, border-width;
+    }
+    .group-or-rule:not(.qb-draggable, .qb-placeholder) > .group--header:hover .group--header,
+    .group-or-rule:not(.qb-draggable, .qb-placeholder) > .group--header:not(:hover),
+    .rule_group:not(:hover) {
+      .group--conjunctions {
+        #{$inactive} {
+          width: 0;
+          min-width: 0;
+          padding-left: 0;
+          padding-right: 0;
+          margin: 0;
+          overflow: hidden;
+          opacity: 0;
+          border-width: 0;
+        }
+      }
+    }
+  }
+}
+
+@mixin show_only_for_hovered_rule($what) {
+  @if $what {
+    #{$what} {
+      transition: opacity 0.2s;
+    }
+    .rule:hover .rule,
+    .rule:not(:hover) {
+      #{$what} {
+        opacity: 0;
+      }
+    }
+  }
+}
+
+@mixin force_unvisible($what) {
+  @if $what {
+    #{$what} {
+      opacity: 0 !important;
+    }
+  }
+}
+
+@mixin force_not_display_conjs($what) {
+  @if $what {
+    .group-or-rule:not(.qb-draggable, .qb-placeholder) > .group--header {
+      .group--conjunctions {
+        #{$what} {
+          width: 0 !important;
+          min-width: 0 !important;
+          padding: 0 !important;
+          overflow: hidden !important;
+          opacity: 0 !important;
+        }
+      }
+    }
+  }
+}
+
+$group_actions: (".group--drag-handler", ".group--actions") !default;
+$inactive_conjs: false !default;
+$active_conjs: false !default;
+$rule_actions: (".rule--fieldsrc", ".widget--valuesrc", ".rule--drag-handler", ".rule--header") !default;
+
+
+.qb-lite {
+  @include visible_only_for_hovered_group($group_actions);
+  @include display_conjs_only_for_hovered_group($inactive_conjs, $active_conjs);
+  @include show_only_for_hovered_rule($rule_actions);
+
+  &.qb-dragging {
+    @include force_unvisible(#{$rule_actions, $group_actions});
+    @include force_not_display_conjs($inactive_conjs);
+  }
+}

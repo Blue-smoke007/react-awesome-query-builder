@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "esnext",
+    "jsx": "preserve",
+    "lib": ["es2020", "dom", "dom.iterable"],
+    "allowJs": true,
+    "noEmit": true,
+
+    "strict": true,
+    "alwaysStrict": true,
+    "strictNullChecks": false,
+    "noImplicitReturns": true,
+
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "skipLibCheck": false,
+  },
+  "include": [
+    "packages/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

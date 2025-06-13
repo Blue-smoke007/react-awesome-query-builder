@@ -1,0 +1,64 @@
+import React from "react";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import xdpPackage from "@mui/x-date-pickers/package.json"; // to determine version
+import FormControl from "@mui/material/FormControl";
+import TextField from "@mui/material/TextField";
+import { Utils } from "@react-awesome-query-builder/ui";
+const { moment } = Utils;
+const xdpVersion = parseInt(xdpPackage?.version?.split(".")?.[0] ?? "0");
+
+export default (props) => {
+  const {value, setValue, readonly, customProps, dateFormat, valueFormat, placeholder, config} = props;
+  const {renderSize} = config.settings;
+
+  const formatSingleValue = (value) => {
+    return value && value.isValid() ? value.format(valueFormat) : undefined;
+  };
+
+  const handleChange = (value) => {
+    setValue(formatSingleValue(value));
+  };
+  
+  const renderInput = (params) => 
+    <TextField 
+      size={renderSize}
+      variant="standard"
+      {...params}
+    />;
+
+  const desktopModeMediaQuery = "@media (pointer: fine), (pointer: none)";
+
+  const pickerProps = xdpVersion >= 6 ? {
+    format: dateFormat,
+    slotProps: {
+      textField: {
+        size: renderSize,
+        variant: "standard"
+      },
+      toolbar: {
+        toolbarPlaceholder: !readonly ? placeholder : "",
+      },
+    },
+  } : {
+    inputFormat: dateFormat,
+    renderInput,
+    toolbarPlaceholder: !readonly ? placeholder : "",
+  };
+
+  const aValue = value ? (xdpVersion >= 6 ? moment(value, valueFormat) : value) : null;
+
+  return (
+    <FormControl>
+      <DatePicker
+        desktopModeMediaQuery={desktopModeMediaQuery}
+        readOnly={readonly}
+        disabled={readonly}
+        value={aValue}
+        onChange={handleChange}
+        size={renderSize}
+        {...pickerProps}
+        {...customProps}
+      />
+    </FormControl>
+  );
+};

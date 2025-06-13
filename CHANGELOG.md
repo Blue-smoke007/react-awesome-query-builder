@@ -1,0 +1,507 @@
+# Changelog
+- 6.7.0
+  - Added `price` widget based on `react-number-format` (PR #1206) (issue #1025)
+  - Improved theming (PR #1188) (issues #892 #970 #599)
+  - Dropped `compact_styles.scss`. Use class `.qb-compact` instead if you need. See new `vars_compact.scss` (PR #1188)
+  - Added customized modals to confirm item deleteion for Fluent, Bootstrap (PR #1188)
+  - Added `showSelectedValueSourceLabel` to config settings (PR #1272) (issue #1144)
+- 6.6.15
+  - Fixed support of AntDesign 4.x DatePicker (PR #1239) (issue #1238)
+  - Prevent potential prototype pollution in `OtherUtils.mergeIn` and `OtherUtils.setIn` (PR #1240)
+  - Fix XSS vulnerability in antd package (PR #1243) (issue #1009)
+  - Updated dependencies. `@babel/runtime` is now dep for all packages (PR #1246) (issue #964)
+  - Fix group operator's custom jsonLogic function not being called (PR #1242) (issue #1241)
+  - Fix import switch from JsonLogic (PR #1235) (issue #1230)
+  - Fix incorrect using of "$not" as top-level operator in output to MongoDb (PR #1254) (issue #1250)
+  - Fix using incorrect date format in output to MongoDb (PR #1254)
+  - Added date/datetime functions: `TODAY`, `START_OF_TODAY`, `RELATIVE_DATE`, `TRUNCATE_DATETIME` (PR #1256) (issue #1237)
+  - Fixed datetime functions `NOW`, `RELATIVE_DATETIME` for MongoDb (PR #1256)
+  - Fixed comparing of dates with `==` and `!=` in JsonLogic by using new ops `date==`, `date!=`, `datetime==`, `datetime!=`. Added `fixJsonLogicDateCompareOp` to `config.setings` (false by default) (PR #1256)
+  - Now `Utils.JsonLogicUtils.addRequiredJsonLogicOperations(jl)` can be used for instance of `json-logic-js` to add custom operators (PR #1256)
+- 6.6.14
+  - Fixed import from JsonLogic when like op is used inside group with some group op (PR #1225) (issue #1221)
+  - Support React 19 (PR #1229) (issue #1205)
+- 6.6.13
+  - Fix selecting func/args at RHS at delta 1 (PR #1211) (issue #1207)
+  - Fix fetchSelectedValuesOnInit for func arguments (PR #1210) (issue #1198)
+  - Fix SpEL import/export for between op (PR #1212) (issue #1203)
+- 6.6.12
+  - Fix issue with getting field config for func arg signature object (PR #1193) (issue #1192)
+- 6.6.11
+  - Fix issue with updating both config & tree value (PR #1190) (issue #1187)
+- 6.6.10
+  - Fix escape/unescape for LIKE operator (PR #1177) (issue #982)
+  - Fix tags tokenization (antd) (PR #1182) (issue #1115)
+  - Added `fieldSettings.fetchSelectedValuesOnInit` (see description in [`CONFIG.adoc`](/CONFIG.adoc)) (PR #1184)
+- 6.6.9
+  - Force autocomplete widget when `fieldSettings.allowCustomValues` is true (MIU/antd) (PR #1176) (issue #1150)
+  - Fix disabling !struct (PR #1178) (issue #1121)
+- 6.6.8
+  - Support safe navigation operator in SpEL operators/functions (PR #1172) (issue #1010)
+  - SpEL: backward compatibility for import of `CollectionUtils.containsAny` (PR #1174) (issue #1007)
+  - Support MUI 6 (PR #1175) (issue #1113)
+- 6.6.7
+  - Fix import of ambiguous operators (like, select_any_in) (PR #1168) (issue #1159)
+  - Allow import of epoch for date/datetime widgets from JsonLogic (PR #1171) (issue #1154)
+- 6.6.6
+  - Fix issue with process global (PR #1166) (issue #1165)
+- 6.6.5
+  - Support import fom SQL (`SqlUtils.loadFromSql`) (PR #1103) (issue #911, #593)
+  - Fixed type issue with SerializedFunction (PR #1103) (issue #1024)
+- 6.6.4
+  - Support groups inside rule-group (PR #1111) (issue #1108)
+  - Fixed cardinality issue (PR #1136) (issue #1118)
+  - Fixed types (PR #1131, #1132, #1130, #1129, #1127, #1128, #1126)
+- 6.6.4-alpha.0
+  - Support groups inside rule-group (PR #1111) (issue #1108)
+- 6.6.3
+  - Fixed `Utils.isValidTree` for prod build.
+    Removed `checkTree`, `isValidTree` from `Utils.Import` and `getTreeBadFields` from `Utils.TreeUtils`. (PR #1091) (issue #1075)
+  - Use pnpm 8 (to support CodeSandbox and StackBlitz) (PR #1093)
+  - Added tasks for VSCode (PR #1095)
+  - Refactored examples demo app (PR #1097)
+  - JsonLogic roundtrip fix (issue #1084) (PR #1092)
+  - Fixed lagging state of multiselect FluentUI component and added searchable options to select and multiselect (PR #1090)
+  - Added `customOperatorSelectProps` (issue #1094) (PR #1098)
+- 6.6.2
+  - Fixed issue with rendering func select inside func (PR #1086) (issue #1085)
+  - Added `DefaultUtils` typings to `index.d.ts` (PR #1078) (issue #1079)
+  - Added config option `exportPreserveGroups` (PR #1077) (issue #1074)
+  - Support `@mui/x-date-pickers` v7 (PR #1088) (issue #1087)
+- 6.6.1
+  - Operators reverse on "NOT" is now optional, disabled by default to preserve orignal query (PR #1068) (issue #1059).  
+    Added settings `reverseOperatorsForNot` and `canShortMongoQuery`
+  - Scope CSS classes to `.query-builder` (PR #1070) (issue #1018)
+  - Update packages (PR #1071)
+  - Fixed issue with `excludeOperators` (affects `prox1` at example) (PR #1072)
+  - Use pnpm 9 (PR #1073)
+- 6.6.0
+  - Optimizations for rendering and export utils (PR #1054) (issue #342)
+  - Added support of JsonLogic export for ternary mode (PR #1013) (issue #978)
+  - Added support of JsonLogic import for ternary mode (PR #1062) (issue #978)
+  - Added support of `tooltip` for operator config (PR #1011) (issue #261)
+  - Removed `optimizeRenderWithInternals` from `settings` (PR #1054)
+  - Fixed `TreeStore` - 2nd arg `action` can be undefined (PR #1054) (issue #1056)
+  - Fixed import of negative number in SpEL (PR #1054) (issue #1055)
+  - Fixed validation error message for min/max (PR #1058) (issue #1057)
+  - (Ternary mode) Added to `config.settings`: `caseValueField`, `renderBeforeCaseValue`, `renderAfterCaseValue`, `renderSwitchPrefix`, `defaultCaseLabel`, `addCaseLabel`, `addDefaultCaseLabel` (PR #1062)
+  - Use icon button label as the aria-label to improve accessibility (PR #1066) (issue #1038)
+  - Show imported value initially in MUI autocomplete inputs (PR #1065)
+  - Make getOptionLabel always return a string (PR #1064)
+- 6.5.2
+  - Updated dependencies. `@babel/runtime` is now dep for core package (PR #1051) (issue #964)
+- 6.5.1
+  - Fix missing config file in antd moment date widgets (PR #1046) (issue #1048)
+  - Fix SpEL import not_between (PR #1050) (issue #1047)
+- 6.5.0
+  - Breaking: `Utils.validateTree` returns array of errors (PR #1034)
+  - Breaking: `Utils.sanitizeTree` returns object `{fixedTree, fixedErrors}` (PR #1034)
+  - Breaking: `removeIncompleteRulesOnLoad` by default is false
+  - Added config `removeEmptyRulesOnLoad` (default true) (PR #1034)
+  - Deprecated `Utils.validateAndFixTree` and `Utils.checkTree` (and removed type defs).  
+    Use `Utils.sanitizeTree().fixedTree` instead (PR #1034)
+  - `Utils.validateTree` now checks LHS and RHS are completed (issues #977, #781) (PR #1034)
+  - Fixed import of `select_any_in` operator from JsonLogic (issue #1005) (PR #1034)
+  - Fixed issue #1036 (PR #1034)
+  - Fixed validation of date ranges (issue #374) (PR #1034)
+  - Function `validateValue` in `fieldSettings` config can now return object `{error, fixedValue}`, error can be `{key, args}` for i18n (PR #1034)
+  - Added `optimizeRenderWithInternals` to `settings`, default is `false` (PR #1034)
+  - Updated type `RuleGroupExtProperties` (issue #1021) (PR #1034)
+  - Fixed typedef errors (issue #1016) (PR #1034)
+  - Fixed issue with antd and date/time pickers (issue #1033) (PR #1034)
+  - Added `onInit` prop to `<Query>`. Added 4th argument `actions` to `onInit` and `onChange` (PR #1034)
+  - Now `pnpm i` requires Node 18+
+- 6.4.3
+  - Fixed the issue when using func with arg of type `multiselect` (PR #997)
+  - Updated `immutable` from v3 to v4 (PR #997)
+  - Fixed issue with "[object Object]" in MUI field autocomplete when item should be bold (PR #997)
+  - Respect `funcs` in field/arg config during validation of function value (PR #997)
+- 6.4.2
+  - Allow override icons with `renderIcon` (issues #319, #872) (PR #962)
+  - Support tooltips for MUI (issues #965, #684) (PR #973)
+  - Fixed issue with `FieldCascader` (issue #969) (PR #973)
+  - Fixed issue with date/time pickers for MUI 6 (issue #986) (PR #973)
+  - Allow use of antd icons 5 (issue #992) (PR #973)
+- 6.4.1
+  - Fixed import of rule_group in rule_group from SpEL (PR #959)
+  - Updated type `ItemBuilderProps` (PR #959)
+  - Fixed drag-n-drop to respect `maxNesting` when moving group into group (PR #959)
+  - Fix: allow custom conjuction in JsonLogic (issue #317) (PR #959)
+  - Fixed import of fields with dot from JsonLogic (issue #786) (PR #960)
+  - Fixes export to SpEL to respect `fieldSeparator` (issue #958) (PR #960)
+- 6.4.0
+  - Functions can be used in LHS with `fieldSources: ["field", "func"]` in `settings`  
+    Thanks @rhallerman1 (PR #900, #896) (issues #287, #250, #344, #336)
+  - Support import/export of functions for SpEL (PR #900) (issue #754)
+  - Fix issue with `fieldName` (PR #900) (issues #929, #609)
+  - Support `@mui/x-date-pickers` v6 (PR #951) (issue #910)
+  - Updated antd to 5.7.2 (PR #952) (issue #946)
+  - Updated dev dependencies. Now `pnpm i` requires Node 16+
+  - Updated `@fluentui/react`. Fixed date/time widgets
+  - Autocomplete items now support `groupTitle` (PR #953) (issue #600)
+  - Add more types in `Utils.Autocomplete` (PR #953) (issue #934)
+  - Add settings `fieldItemKeysForSearch` and `listKeysForSearch` (PR #954) (issue #931)
+  - Add settings `defaultField` and `defaultOperator` (PR #956) (issue #763)
+- 6.3.0
+  - Allow saving and loading config from server (PR #866) (issue #817)
+    - New utils: `compressConfig()`, `decompressConfig()`
+    - New `settings.useConfigCompress`
+    - Config now has `ctx` property
+    - Added new test app `sandbox_next` to demonstrate new server-side features
+  - Export utils (like `mongoFormatOp1`, `mongoFormatOp2`) in `CoreConfig.ctx.utils` (PR #866) (issue #890)
+  - 2nd parameter of `onChange` callback now equals original config, not extended config (PR #866) (issue #364)
+  - Fix totalQuery structure in mongodb (PR #916) (issue #915)
+  - Fixed bug in `loadTree()` (PR #917) (issue #356)
+  - Fixed bug on change group value (PR #944) (issue #923)
+  - Fixed render of option titles in Autocomplete AntDesign (PR #947) (issues #930, #942)
+  - Implemented `allowCustomValues` for MUI (PR #947) (issue #327)
+  - Improved autocomplete for MUI and AntD. Mark custom values with coral color (PR #947)
+  - Type fixes for `strictNullChecks` (PR #948) (issue #945)
+- 6.2.0
+  - Fixed type `Config`: should have render settings like `renderSize` (PR #909) (issue #879)
+  - Fixed type for `renderBeforeWidget`: `RuleProps` instead of wrong `FieldProps` (PR #909) (issue #879)
+  - Breaking change in types: `listValues` renamed to `treeValues` in `TreeSelectFieldSettings`  
+    But old `listValues` is still supported in JS (PR #909)
+  - Add support for ElasticSearch 7 term syntax (PR #906) (issue #904)
+  - Fix mongodbFormat to work with mode = array (PR #908) (issue #907)
+- 6.1.3
+  - Fix isNull roundtrip (PR #887) (issue #886)
+  - Fix `BootstrapFieldSelect` for fields with 2+ level nesting (PR #898) (issue #868)
+  - Fix `UNSAFE_componentWillReceiveProps` (PR #901) (issue #390)
+  - Fix bugs with `React.StrictMode` (PR #902) (issue #789)
+- 6.1.2
+  - Fix typings for `children1`: tuple -> array (PR #885) (issue #881)
+  - Fix compare fields for case when type != widget.type (PR #875) (issue #758)
+- 6.1.1
+  - Fix CJS build (issue with antd/es and antd/lib) (PR #859) (issue #858)
+  - Fix button labels (PR #856) (issue #824)
+  - Fix whitespace in select (PR #855) (issue #845)
+- 6.1.0
+  - Improve styles (PR #848)
+    - More `flex`ible styles for low-width
+    - `styles.scss` now has vars that can be overridden to change colos and sizes
+    - Breaking: Now `compact_styles.css` replaces `styles.css`, don't use them together
+    - Breaking: Removed icon in "Add sub rule" button
+  - Added `@react-awesome-query-builder/fluent` package (PR #727)
+  - Fix import of `is_null` and `is_not_null` ops from SpEL (PR #831) (issue #794)
+  - Fix import of NOT from SpEL (PR #852) (issue #834)  
+    Also fixes export of aggregation expression w/o children filter like `cars.size() == 2`
+  - Support antd 5 (PR #853) (issue #812)
+- 6.0.0
+  - Project has been divided into packages (monorepo) (PR #769)
+    Export ESM
+- 5.4.0
+  - Add `multiselect_contains` operator (PR #813) (issue #702)
+- 5.3.2
+  - Fix drag-n-drop issue in React 18 using `ReactDOM.createRoot()` (PR #815) (issue #792)
+  - Type fix: add `id` for `JsonRule` (PR #799) (issue #791)
+  - Type fix: Add typings for `groupOperators` (PR #798)
+  - Fix: `not` operation at the root not detected when importing from SpEL (PR #767) (issue #766)
+- 5.3.1
+  - Support `@fortawesome/react-fontawesome 0.2.x` (issue #757)
+  - Fix `loadFromSpel` for `select_not_equals` op (PR #761) (issue #704)
+- 5.3.0
+  - Added `renderItem` (PR #729)
+- 5.2.1
+  - Fix type applied to filter funcs as another func's arg value (PR #743) (issue #586)
+  - Allow self nesting of functions with `allowSelfNesting` (PR #698)
+  - ES: Fix `greater` op (PR #749) (issue #744)
+  - ES: Fix NOT (PR #750) (issue #723)
+- 5.2.0
+  - ! Breaking change: `children1` is now array in result of `getTree()` to preserve items order (PR #672) (issues #589, #670)  
+    `Utils.getTree(tree, true, false)` will behave same as before this change.
+  - Support React 18. Migrate to x-date-pickers. (PR #734) (issues #710, #732)
+  - Add path property at `index.d.ts` (PR #671) (issue #669)
+  - Fixed `getTotalRulesCountInTree()` == 1 (should be 0) for clear tree (PR #673) (issue #583)
+  - Handle validation of bad multiselect value correctly (PR #733) (issue #674)  
+    Remove bad values from list, don't unset whole value.  
+    Added config `removeInvalidMultiSelectValuesOnLoad` (true by default, false for AntDesign)  
+    ! Breaking change: `removeIncompleteRulesOnLoad` and `removeEmptyGroupsOnLoad` now default to `true`, set them to `false` in your `settings` to preserve the current behaviour
+  - Fix `loadFromSpel` for `select_equals` op (PR #740) (issue #704)
+  - Fix `loadFromSpel` for `is_empty` and `is_not_empty` ops (PR #713) (issues #714, #699)
+- 5.1.2
+  - Added config `removeIncompleteRulesOnLoad` (default false) (PR #661) (issue #642)
+  - Fix error when using same field for comparison as argument of function (PR #662) (issue #612)
+  - Set missing `id` in `fixPathsInTree()` (PR #665) (issue #664)
+  - Use func arg type in field selection (PR #666) (issue #615)
+- 5.1.1
+  - Fix value null instead of undefined in JSON (PR #657) (issue #653)
+- 5.1.0
+  - Use spel2js 0.2.8 instead of my branch (PR #638) (issues #634, #643, #654)
+  - Add async load to antd (PR #640) (issues #616, #425)
+  - Fix autocomplete (PRs #655, #641)
+  - Fix setting defaultValue on set value src (PR #639) (issue #635)
+  - Fix validation of multiselect func arg (PR #656) (issue #587)
+- 5.0.0
+  - Support of SpEL for import and export. See `loadFromSpel` and `spelFormat` in `Utils` (PR #613)
+  - Added `excludeOperators` for type config (PR #613)  
+    See `excludeOperators: ["proximity"]` in demo
+  - Changed export of `not_between` op for text format (`!(num >= 3 && num <= 4)` -> `(num < 3 || num > 4)`) (PR #613)
+  - Rename `Like` -> `Contains`. Moved `is_empty`, `is_null` to end of operators list (PR #613)
+  - Support MUI v5 (PR #628)
+  - Upgraded to React 17. Moved from RHL to react-refresh. Converted demo app to FC. (PR #628)
+  - Added `Utils._loadFromJsonLogic()` that returns `[tree, errors]` (issue #621)
+- 4.10.0
+  - Support Bootstrap (via `reactstrap`) (PR #604)
+- 4.9.0
+  - Added `is_null` and `is_not_null` operators (issue #494) (PR #522)
+  - ! Breaking change for operators `is_empty` and `is_not_empty` (issue #494) (PR #573)  
+    Left for text type only, for other types will be auto converted to `is_null`/`is_not_null`.  
+    Changed meaning of `is_empty` - now it's just strict comparing with empty string.  
+    Before change meaning was similar to `is_null` (and export to SQL was wrong because of non-existent operator `IS EMPTY`).
+  - Fixed order of operators for field when merging operators from 2+ widgets (PR #573)
+  - Added last param `fieldDef` for functions to format operators (PR #573)
+  - Added `jsonLogic` to widget TS def (PR #572)
+  - Export `TreeUtils` (PR #597)
+- 4.8.0
+  - Added read-only mode switch for rules and groups.  
+    See `showLock` and `canDeleteLocked` config options, custom JsonLogic op `locked`, `setLock` action, `lockLabel` and `lockedLabel`.  
+    Added Switch components, see `renderSwitch`. (issue #377) (PR #490)
+  - Fixed issue with frozen config (`Object.freeze`) by using `clone` (issue #345) (PR #490)
+  - Fix: Filter value sources for func args correctly. LHS field can be used as arg in RHS function. (PR #490)
+  - MUI - Support showSearch (autocomplete) for field select widget (issue #479 #521) (PR #563)
+  - AntDesign - Fix FieldSelect with 3+ level !struct nesting (issue #224) (PR #564)
+- 4.7.2
+  - Fixed import of rule_group with `not` (issue #548) (PR #559)
+- 4.7.1
+  - Fixed potential inconsistent order of fields (issue #335) (PR #553)
+  - Bump `webpack-dev-server` from 3.11.2 to 4.4.0 (PR #540)
+  - Change `FieldItems` type definition from map to array (issues #550, #363) (PR #551)
+  - Spreading `customProps` to vanilla widgets (PR #546)
+  - Fix for `allowCustomValues` (PR #545)
+  - Use minimum `material-ui` version 4.12.3 and use new `createTheme` instead of deprecated `createMuiTheme` (issue #463) (PR #531)
+- 4.7.0
+  - Add explicit `not: false` in new group (issue #512)
+  - Fix: don't automatically add one rule to query when it become empty when `canLeaveEmptyGroup=true` (issue #504)
+  - Added config `forceShowConj` (issue #474)
+  - Fixed import of complex hierarchy fields (combination of !group and !struct) from JsonLogic (issues #517, #333)
+  - Fixed non-ordered map bug (issue #501)
+- 4.6.0
+  - Added `groupId` (id of the parent Item - Group, RuleGroup, RuleGroupExt etc) to field's, operartor's and widget's props (PR #510)
+  - Fixed export to ES when group is empty (broken 'Clear' button in demo app) (PR #511)
+  - Added 3rd param `actionMeta` to `onChange()` to get info about action (PR #445) (issue #351)
+  - Added demo of using actions programmatically (see `run actions` in demo app) (PR #445)
+  - Added config `shouldCreateEmptyGroup` (default `false`) (PR #445)
+  - Now config `canLeaveEmptyGroup` is true by default (PR #445) (issue #504)
+  - Breaking changes for format with `isForDisplay=true` - don't wrap strings with `"`, replace `==` with `=` (PR #518)
+  - Fixed type definition for export utils - can return undefined (PR #516)
+  - Fixed use of `hideOperator` (PR #523) (issue #292)
+  - Documented `cancelText` (PR #524) (issue #520)
+- 4.5.2
+  - Added rule `id` to field's, operartor's and widget's props. Added config of the selected field to the operator props as `fieldConfig` (issue #502) (PR #503)
+- 4.5.1
+  - Fixed export of field name to ES (broken demo app)
+- 4.5.0
+  - Added basic support of export to ElasticSearch (PR #469)
+  - Export all helper funcs from configUtils (PR #493)
+  - Fixed bug with zero value in MaterialSelect (PR #392)
+- 4.4.3
+  - babel: use "@babel/plugin-transform-runtime" to avoid globally defined regenerator runtime (PR #480)
+  - Fix export of not in some!group into JsonLogic (issue #476) (PR #484)
+  - Fixed issue with default import/export in Vite build (PR #481)
+- 4.4.2
+  - Added support of autocomplete for multiselect widget in MUI (PR #475)
+- 4.4.1
+  - feat: possibility to add custom operators for groups (PR #462)
+- 4.4.0
+  - Added support of server-side load of values for `select` (MaterialUI only) (PR #471)
+- 4.3.0
+  - Improved function support
+  - Functions used in examples now moved to `BasicFuncs` (exported with lib)
+  - Added funcs `RELATIVE_DATETIME`, `NOW`, `UPPER`
+  - Added option `showPrefix` for func args (false by default)
+  - Added missing `mongoFormatValue` for all types in basic config (now dates are exported as `Date` objects)
+- 4.2.0
+  - Added `textarea` widget
+- 4.1.1
+  - Fix warning about showSearch in MUI theme
+  - Fix incorrect override of vanilla button label (issue #347)
+  - Fix display default conj (issue #426)
+  - Don't wrap in MUI ThemeProvider if no theme or locale provided (issue #325)
+  - Fix canLeaveEmptyGroup logic (issue #378)
+- 4.1.0
+  - Fixed lint errors in code
+  - Reorganized files in `tests`
+  - Updated packages
+  - Now minimum supported NodeJs is 12.13
+  - Added TSC linting
+  - Now ESLint checks types in TS files
+  - Added new scripts: `install-all`, `clean`, `reinstall`, `build-all`, `check-hot`, `tsc`, `eslint`, `smoke`, `resmoke`.
+    Renamed `sandbox_ts` to `sandbox-ts`, `sandbox_js` to `sandbox-js`.
+  - Fixed problems with VSCode's TSLint plugin
+  - Moved from deprecated `prepublish` to `prepare` in `package.json`
+- 4.0.4
+  - Fixed issue #349 with drag-n-drop and office-ui-fabric-react
+  - Fixed issue #413 with func arg with 1 value source which is not value
+- 4.0.3
+  - Fixed issue #386 with import select field from JsonLogic (reason: bug with func/field widget in getWidgetForFieldOp)
+  - Fixed issue #387 with subgroups in Material UI
+- 4.0.2
+  - Fixed MaterialConfig import for TS projects (issue #368)
+- 4.0.1
+  - Added custom context to isolate Query Builder store (PR #350)
+  - Added support for React 17 as a peer dependency
+- 4.0.0
+  - Removed setting `useGroupsAsArrays`.
+    Instead added field config `mode` for type `!group` with values:
+    `some` (default, corresponding useGroupsAsArrays = true),
+    `array` (new, user can choose one of group operators),
+    `struct` (obsolete, corresponding useGroupsAsArrays = false).
+  - For type=`!group` and mode=`array`:
+    - new field configs are available: `conjunctions`, `showNot`, `operators`, `defaultOperator`, `initialEmptyWhere`
+    - you can use group operators `some`, `none`, `all` or operators with 1 integer opearnd (for count): `equal`, `not_equal`, `less`, `between`, ..
+    - localization setting `addSubRuleLabel`
+  - Removed obsolete setting `hideConjForOne`
+  - (rare) Added field config `fieldName` to override field key for import/export
+  - (rare) Added field config `jsonLogicVar` and settings `jsonLogic.groupVarKey`, `jsonLogic.altVarKey` to override JsonLogic var key if need
+- 3.0.0
+  - Added [Material-UI](https://material-ui.com) widgets
+- 2.2.2
+  - Fix issue #306: Wrong import from JsonLogic and export to MongoDb for negated single-item group
+- 2.2.1
+  - Fix issue #300: If using query builder inside a form element, buttons try to submit the form
+- 2.2.0
+  - Fixed issues #246 and #176 related to wrong export and import from JsonLogic for multi-nested group fields  
+    Now `!group` fields are treated as arrays (added setting `useGroupsAsArrays` = true)
+- 2.1.19
+  - Fixed issue #252 ("Cannot update a component from inside the function body of a different component")
+  - Issue #190: Fixed TS def for getTree/2 - added 2nd param light?
+- 2.1.17
+  - Dropped support of loading query in obsolete Immutable string format used in versions 0.\* (issue #254)
+- 2.1.16
+  - Fixed issues with export to Mongo and JsonLogic of queries with nested groups (#279, #279)
+- 2.1.15
+  - Fixed issue #276 with TS definitions
+- 2.1.14
+  - Require Node v10+ (for karma)
+  - Fixed "SyntaxError Unexpected token '<'" in sandboxes
+  - Fixed requirement of sass in sandboxes
+  - Fixed eslint warnings in sandboxes
+  - Improved Travis config: fixed ENOSPC, removed excess testing during install
+- 2.1.12
+  - Added sandbox with vanilla widgets and without TS
+- 2.1.11
+  - Minor fix for some/not JsonLogic operators can be potentially used for array types
+- 2.1.10
+  - Fixed issues #249, #246 regarding export/import from jsonLogic and groups
+  - Fixed issue #272 with float numbers for vanilla widgets
+- 2.1.8
+  - Fixed issue #263
+- 2.1.7
+  - Fixed TS def for conjunctionOptions (#247)
+- 2.1.6
+  - Temporary disable AntDesign 4.5.0+ because of "Invalid hook call" problem
+- 2.1.4
+  - Fixed issue #249 with importing rules with group fields from JsonLogic format
+- 2.1.3
+  - Fixed issue #255 with reordering
+- 2.1.2
+  - Added config `maxNumberOfRules`
+  - Bugfix: respect `maxNesting` and `canLeaveEmptyGroup` settings during drag-n-drop
+  - Enabled ESLint for examples with TS
+- 2.1.1
+  - Fixed export of `not_like` op to JsonLogic
+- 2.1.0
+  - Added displaying of rule validation errors, see `showErrorMessage` in config.settings
+  - Added `QbUtils.isValidTree()`
+  - `validateValue` moved from widget settings to field's `fieldSettings`
+  - Added ESLint (unused vars & props are off for now)
+- 2.0.11
+  - Added `starts_with`, `ends_with` operators for text type
+- 2.0.10
+  - Fixed bug with missing `funcs` in config
+- 2.0.9
+  - Fixed issues #215, #214, #208
+  - Fixed `validateValue`
+  - Simpler sandbox demo
+- 2.0.8
+  - Fixed issue #207
+- 2.0.7
+  - Added `canShortMongoQuery` to `config.settings`
+- 2.0.6
+  - Fixed issue #176
+- 2.0.5
+  - Fixed TS types. Updated sandbox to TS
+- 2.0.4
+  - Fixed import
+- 2.0.2
+  - Fix for TS
+- 2.0.1
+  - Fixed issues #187, #194, #182
+- 2.0.0
+  - Added `renderConjs`, `renderButton`, `renderButtonGroup`, `renderProvider`, `renderValueSources`, `renderConfirm`
+  - Removed coupling with AntDesign. Now it should be possible to use another UI framework.
+  - Added vanilla widgets. Added switcher between `antd` and `vanilla` in demo.
+- 1.3.7
+  - Fixed issue #168 with dot in field name
+- 1.3.6
+  - Added config options to disable inputs: `immutableFieldsMode`, `immutableOpsMode`, `immutableValuesMode`
+- 1.3.5
+  - Issue #158
+- 1.3.3
+  - Bugfix
+- 1.3.2
+  - Bugfix
+- 1.3.1
+  - Added `FieldTreeSelect`
+- 1.3.0
+  - Added support of `!group`
+- 1.2.0
+  - Added `treeselect` and `treemultiselect` types
+  - Changed format of `listValues` from `{<value>: <title>}` to `[{value, title}]` (old is supported).
+    Tree select also use `listValues`, format is compatible with simple select - `[{value, title, parent}]`
+- 1.1.3
+  - Fixed console warnings
+  - Fixed dev hot reload: now state is preserving
+  - Added render hoooks to `config.settings`: `renderBeforeWidget`, `renderAfterWidget`, `renderBeforeActions`, `renderAfterActions`
+- 1.1.2
+  - Added import from [JsonLogic](http://jsonlogic.com)
+- 1.1.1
+  - Optimized `$eq` and `$and` in MongoDb query export
+  - Fixed error if query value is empty
+  - Added API in readme
+- 1.1.0
+  - Added export to [JsonLogic](http://jsonlogic.com)
+- 1.0.12
+  - Added `sqlFormatFunc`, `mongoFormatFunc`, `renderBrackets`, `renderSeps` (for func), `funcs` (for field)
+- 1.0.11
+  - Added css-class `qb-lite` for query builder (see readme if you wanna use it)
+- 1.0.10
+  - Fix when using cascader for func selection
+- 1.0.9
+  - Allow group of functions (like with fields - `type == '!struct'` and `subfields`)
+- 1.0.8
+  - Added support for your custom functions as value source (args can be values/fields/funcs), see new section `funcs` in `config`
+  - Improved Mongo format: now can compare with field & use funcs with help of `$expr`
+  - (breaking) `mongoFormatOp` - inserted arg `useExpr` at 4th position
+  - Added `hideForSelect`, `hideForCompare` for field config
+- 1.0.7
+  - Fixed Babel
+- 1.0.6
+  - Added TypeScript support (`examples` uses TS, `sandbox` uses JS)
+  - Updated Babel, Webpack
+  - For `field` widget slightly changed format of `formatValue()` and `sqlFormatValue()` functions - argument `rightFieldDef` is now last one
+  - Added `defaultValue` in field config
+  - All `fieldSettings` will be now passed to widget props
+  - `listValues` and `allowCustomValues` moved inside `fieldSettings`
+- 1.0.4
+  - Added `QbUtils.sqlFormat()` (issue #29)
+  - Added `like` and `not_like` operators
+  - Added 2 params `string op, Object opDef` to end of `formatValue()`, `mongoFormatValue()`
+- 1.0.3
+  - Completely removed auto-loading of antd styles (issue #50)
+- 1.0.2
+  - Fixed bug with running examples app via react-scripts
+- 1.0.1
+  - Fixed bug with importing React
+- 1.0.0
+  - Don't include AntDesign styles automatically (issues #50, #93)
+  - added: `allowCustomValues` (issue #88)
+  - change: removed `renderFieldAndOpAsDropdown`, replaced by `renderField` (issue #109)
+  - added `renderOperator` (issue #89)
+  - change: query value now can be exported to JSON (instead of `Immutable.Map`), and loaded with `loadTree` (old format is supported) (issue #61)
+  - added: `canRegroup`
+  - rename: `readonlyMode` -> `immutableGroupsMode`
+  - rename: `get_children` -> `renderBuilder`
+  - removed: unused `<Preview />` component and `.query-preview` class
+  - optimized renders & dragging
